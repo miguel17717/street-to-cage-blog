@@ -1,0 +1,38 @@
+---
+interface Props {
+  author: string;
+  authorRole: string;
+  tags: string[];
+  relatedDrop: string;
+  relatedDropPrice: string;
+}
+
+const { author, authorRole, tags, relatedDrop, relatedDropPrice } = Astro.props;
+---
+
+<aside class="post-sidebar">
+  <div class="sidebar-panel">
+    <div class="operator">
+      <div class="operator-icon" aria-hidden="true">STC</div>
+      <div>
+        <p>{author}</p>
+        <span>{authorRole}</span>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <h2>RELEVANT_TAGS</h2>
+      <div class="tag-cluster">
+        {tags.map((tag, index) => <span class={`tag-sticker tag-${index % 4}`}>#{tag}</span>)}
+      </div>
+    </div>
+
+    <div class="drop-card">
+      <p>RELATED_DROP</p>
+      <h2>{relatedDrop}</h2>
+      <span>{relatedDropPrice}</span>
+    </div>
+
+    <a class="buy-button" href="/">OPEN_ARCHIVE</a>
+  </div>
+</aside>

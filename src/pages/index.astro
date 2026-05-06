@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Street to Cage Blog"
+  description="Static MMA streetwear archive for Street to Cage field notes, training essays, and gritty blog drops."
+>
+  <main class="home-shell">
+    <section class="archive-hero">
+      <span class="sticker-label">FEATURED_ARCHIVE</span>
+      <h1>Street to Cage</h1>
+      <p>
+        Static MMA zine for training essays, streetwear notes, and fight-culture field drops.
+      </p>
+    </section>
+
+    <section class="archive-grid" aria-label="Blog archive">
+      {
+        posts.map((post) => (
+          <article class="archive-card">
+            <div class="title-bar">
+              <time datetime={post.data.pubDate.toISOString()}>
+                {post.data.pubDate.toLocaleDateString('vi-VN')}
+              </time>
+            </div>
+            <div class="archive-card-body">
+              <h2>
+                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+              </h2>
+              <p>{post.data.description}</p>
+              <div class="tag-cluster">
+                {post.data.tags.map((tag) => (
+                  <span class="tag-sticker">#{tag}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </main>
+</BaseLayout>

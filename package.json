@@ -1,0 +1,19 @@
+{
+  "name": "street-to-cage-blog",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "set ASTRO_TELEMETRY_DISABLED=1 && astro dev",
+    "build": "set ASTRO_TELEMETRY_DISABLED=1 && astro build",
+    "preview": "set ASTRO_TELEMETRY_DISABLED=1 && astro preview",
+    "generate": "node generate.js",
+    "generate:woku": "set \"AI_PROVIDER=woku\" && set \"OPENAI_BASE_URL=https://llm.wokushop.com/v1\" && set \"OPENAI_MODEL=gemini-2.5-flash\" && node generate.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.52.0",
+    "astro": "^5.15.4",
+    "csv-parser": "^3.2.0",
+    "openai": "^6.36.0"
+  }
+}

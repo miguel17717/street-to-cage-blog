@@ -1,0 +1,96 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PostSidebar from '../components/PostSidebar.astro';
+
+interface Props {
+  post: {
+    slug: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      updatedDate?: Date;
+      tags: string[];
+      issue: string;
+      quickAnswer?: string;
+      heroImage?: string;
+      heroImageAlt?: string;
+      heroCaption: string;
+      author: string;
+      authorRole: string;
+      relatedDrop: string;
+      relatedDropPrice: string;
+      fullMarkdown: boolean;
+    };
+  };
+}
+
+const { post } = Astro.props;
+const defaultHero =
+  'https://images.unsplash.com/photo-1517438984742-1262db08379e?auto=format&fit=crop&w=1400&q=80';
+const heroImage = post.data.heroImage ?? defaultHero;
+const quickAnswer =
+  post.data.quickAnswer ?? 'TL;DR: MMA discipline, street texture, and hard-earned field notes from Street to Cage.';
+---
+
+<BaseLayout
+  title={`${post.data.title} | Street to Cage`}
+  description={post.data.description}
+  image={heroImage}
+  type="article"
+>
+  <main class="post-shell">
+    {
+      !post.data.fullMarkdown && (
+        <section class="post-hero">
+          <span class="issue-label">{post.data.issue}</span>
+          <h1>{post.data.title}</h1>
+
+          <div class="quick-answer">
+            <div class="sticker-label">QUICK_ANSWER</div>
+            <p class="quick-title">{quickAnswer}</p>
+            <p>{post.data.description}</p>
+          </div>
+        </section>
+      )
+    }
+
+    <div class="post-grid">
+      <article class="post-content">
+        {
+          !post.data.fullMarkdown && (
+            <figure class="hero-frame">
+              <img src={heroImage} alt={post.data.heroImageAlt ?? post.data.title} loading="eager" />
+              <figcaption>{post.data.heroCaption}</figcaption>
+            </figure>
+          )
+        }
+
+        <div class="post-meta-line">
+          <time datetime={post.data.pubDate.toISOString()}>
+            DROP_DATE: {post.data.pubDate.toLocaleDateString('vi-VN')}
+          </time>
+          {
+            post.data.updatedDate && (
+              <time datetime={post.data.updatedDate.toISOString()}>
+                UPDATED: {post.data.updatedDate.toLocaleDateString('vi-VN')}
+              </time>
+            )
+          }
+        </div>
+
+        <div class="article-body">
+          <slot />
+        </div>
+      </article>
+
+      <PostSidebar
+        author={post.data.author}
+        authorRole={post.data.authorRole}
+        tags={post.data.tags}
+        relatedDrop={post.data.relatedDrop}
+        relatedDropPrice={post.data.relatedDropPrice}
+      />
+    </div>
+  </main>
+</BaseLayout>
