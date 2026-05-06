@@ -5,10 +5,12 @@ const formatDate = (date: Date) => date.toISOString().split('T')[0];
 export async function GET({ site }: { site: URL }) {
   const posts = await getCollection('blog');
   const base = site.toString();
+  const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+  const path = (pathname: string) => `${basePath}${pathname}`;
   const urls = [
-    { loc: new URL('/', base).toString(), lastmod: formatDate(new Date()) },
+    { loc: new URL(path('/'), base).toString(), lastmod: formatDate(new Date()) },
     ...posts.map((post) => ({
-      loc: new URL(`/blog/${post.slug}/`, base).toString(),
+      loc: new URL(path(`/blog/${post.slug}/`), base).toString(),
       lastmod: formatDate(post.data.updatedDate ?? post.data.pubDate)
     }))
   ];

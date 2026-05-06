@@ -14,7 +14,11 @@ interface Props {
 
 const { title, description, image, type = 'website', noindex = false } = Astro.props;
 const site = Astro.site ?? new URL('https://streettocage.local');
-const canonical = new URL(Astro.url.pathname, site).toString();
+const basePath = import.meta.env.BASE_URL;
+const canonicalPath = Astro.url.pathname.startsWith(basePath)
+  ? Astro.url.pathname
+  : `${basePath.replace(/\/$/, '')}${Astro.url.pathname}`;
+const canonical = new URL(canonicalPath, site).toString();
 const socialImage = image ? new URL(image, site).toString() : undefined;
 const robots = noindex ? 'noindex,nofollow' : 'index,follow';
 ---

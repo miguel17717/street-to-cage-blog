@@ -1,11 +1,16 @@
+---
+const base = import.meta.env.BASE_URL;
+const url = (path: string) => `${base.replace(/\/$/, '')}${path}`;
+---
+
 <footer class="site-footer">
   <div>
     <div class="footer-brand">STREET_TO_CAGE</div>
     <p>NO_RING_LIGHTS. NO_FAKE_GRIT. STATIC_OUTPUT_ONLY.</p>
   </div>
   <nav aria-label="Footer navigation">
-    <a href="/">ARCHIVE</a>
-    <a href="/sitemap.xml">SITEMAP</a>
+    <a href={url('/')}>ARCHIVE</a>
+    <a href={url('/sitemap.xml')}>SITEMAP</a>
     <a href="mailto:hello@streettocage.local">CONTACT</a>
   </nav>
 </footer>

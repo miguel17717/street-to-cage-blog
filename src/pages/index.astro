@@ -5,6 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const base = import.meta.env.BASE_URL;
+const url = (path: string) => `${base.replace(/\/$/, '')}${path}`;
 ---
 
 <BaseLayout
@@ -31,7 +33,7 @@ const posts = (await getCollection('blog')).sort(
             </div>
             <div class="archive-card-body">
               <h2>
-                <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+                <a href={url(`/blog/${post.slug}/`)}>{post.data.title}</a>
               </h2>
               <p>{post.data.description}</p>
               <div class="tag-cluster">

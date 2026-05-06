@@ -1,9 +1,14 @@
+---
+const base = import.meta.env.BASE_URL;
+const url = (path: string) => `${base.replace(/\/$/, '')}${path}`;
+---
+
 <header class="site-header">
-  <a class="brand-lockup" href="/" aria-label="Street to Cage homepage">STREET_TO_CAGE</a>
+  <a class="brand-lockup" href={url('/')} aria-label="Street to Cage homepage">STREET_TO_CAGE</a>
   <nav class="primary-nav" aria-label="Primary navigation">
-    <a href="/">ARCHIVE</a>
-    <a href="/blog/welcome/">ZINE</a>
-    <a href="/sitemap.xml">SITEMAP</a>
+    <a href={url('/')}>ARCHIVE</a>
+    <a href={url('/blog/welcome/')}>ZINE</a>
+    <a href={url('/sitemap.xml')}>SITEMAP</a>
   </nav>
-  <a class="header-action" href="/">READ_DROP</a>
+  <a class="header-action" href={url('/')}>READ_DROP</a>
 </header>

@@ -8,6 +8,8 @@ interface Props {
 }
 
 const { author, authorRole, tags, relatedDrop, relatedDropPrice } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const archiveUrl = `${base.replace(/\/$/, '')}/`;
 ---
 
 <aside class="post-sidebar">
@@ -33,6 +35,6 @@ const { author, authorRole, tags, relatedDrop, relatedDropPrice } = Astro.props;
       <span>{relatedDropPrice}</span>
     </div>
 
-    <a class="buy-button" href="/">OPEN_ARCHIVE</a>
+    <a class="buy-button" href={archiveUrl}>OPEN_ARCHIVE</a>
   </div>
 </aside>
